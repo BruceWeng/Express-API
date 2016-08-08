@@ -2,9 +2,11 @@
 let express = require('express');
 let app = express();
 
-app.get('/', function(request, response) {
-  response.send('Hello World');
-});
+// app.get('/', function(request, response) {
+//   response.sendFile(__dirname + '/public/index.html');
+// });
+
+app.use(express.static('public'));
 
 app.get('/blocks', function(request, response) {
   let blocks = ['Fixed', 'Movable', 'Rotating'];
