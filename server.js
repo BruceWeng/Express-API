@@ -8,7 +8,11 @@ app.get('/', function(request, response) {
 
 app.get('/blocks', function(request, response) {
   let blocks = ['Fixed', 'Movable', 'Rotating'];
-  response.json(blocks);
+  response.redirect(301, '/parts');
+});
+
+app.get('/parts', function(request, response) {
+  console.log('This is /parts');
 });
 
 app.listen(3000, function() {
