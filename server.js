@@ -28,7 +28,7 @@ app.param('name', function(req, res, next) {
 });
 
 app.get('/blocks', function(req, res) {
-  res.json(blocks);
+  res.json(Object.keys(blocks));
 });
 
 app.get('/blocks/:name', function(req, res) {
