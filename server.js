@@ -8,9 +8,23 @@ let logger = require('./logger');
 app.use(logger);
 app.use(express.static('public'));
 
+let blocks = {
+  'Fixed': 'Fastened securely in position',
+  'Movable': 'Capable of being moved',
+  'Rotating': 'Moving in a circle around its center'
+};
+
 app.get('/blocks', function(req, res) {
-  let blocks = ['Fixed', 'Movable', 'Rotating'];
   res.json(blocks);
+});
+
+app.get('/blocks/:name', function(req, res) {
+  let description = blocks[req.params.name];
+  if (!description) {
+    res.status(404).json(`No description found for ${req.params.name}`);
+  } else {
+    res.json(description);
+  }
 });
 
 app.get('/redirect', function(req, res) {
