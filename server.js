@@ -14,14 +14,25 @@ let blocks = {
   'Rotating': 'Moving in a circle around its center'
 };
 
+let locations = {
+  'Fixed': 'First floor',
+  'Movable': 'Second floor',
+  'Rotating': 'Penthouse'
+};
+
+app.param('name', function(req, res, next) {
+  let name = req.params.name;
+  let block = name[0].toUpperCase() + name.slice(1).toLowerCase();
+  req.blockName = block;
+  next();
+});
+
 app.get('/blocks', function(req, res) {
   res.json(blocks);
 });
 
 app.get('/blocks/:name', function(req, res) {
-  let name = req.params.name;
-  let block = name[0].toUpperCase() + name.slice(1).toLowerCase();
-  let description = blocks[block];
+  let description = blocks[req.blockName];
   if (!description) {
     res.status(404).json(`No description found for ${req.params.name}`);
   } else {
@@ -29,6 +40,14 @@ app.get('/blocks/:name', function(req, res) {
   }
 });
 
+app.get('/locations/:name', function(req, res) {
+  let description = blocks[req.blockName];
+  if (!description) {
+    res.status(404).json(`No description found for ${req.params.name}`);
+  } else {
+    res.json(description);
+  }
+})
 app.get('/redirect', function(req, res) {
   res.redirect(301, '/parts');
 })
