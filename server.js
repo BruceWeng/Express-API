@@ -65,6 +65,11 @@ app.get('/parts', function(req, res) {
   console.log('This is /parts');
 });
 
+ app.delete('/blocks/:name', function(req, res) {
+   delete blocks[req.blockName];
+   res.sendStatus(200);
+ });
+
 app.listen(3000, function() {
   console.log('Listening on port 3000');
 });
