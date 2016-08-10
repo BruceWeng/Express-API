@@ -2,6 +2,9 @@
 let express = require('express');
 let app = express();
 let logger = require('./logger');
+let bodyParser = require('body-parser');
+let parseUrlencoded = bodyParser.urlencoded({ extended: false });
+let parseJson = bodyParser.json();
 // app.get('/', function(request, response) {
 //   response.sendFile(__dirname + '/public/index.html');
 // });
@@ -19,6 +22,13 @@ let locations = {
   'Movable': 'Second floor',
   'Rotating': 'Penthouse'
 };
+
+app.post('/blocks', parseUrlencoded, parseJson, function(req, res) {
+  let newBlock = req.body;
+  blocks[newBlock.name] = newBlock.description;
+  console.log(newBlock.name);
+  res.status(201).json(newBlock.name);
+});
 
 app.param('name', function(req, res, next) {
   let name = req.params.name;
