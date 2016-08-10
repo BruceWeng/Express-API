@@ -2,20 +2,12 @@
 let express = require('express');
 let app = express();
 let logger = require('./logger');
-let bodyParser = require('body-parser');
-let parseUrlencoded = bodyParser.urlencoded({ extended: false });
-let parseJson = bodyParser.json();
+let blocks = require('./routes/blocks');
 // app.get('/', function(request, response) {
 //   response.sendFile(__dirname + '/public/index.html');
 // });
 app.use(logger);
 app.use(express.static('public'));
-
-let blocks = {
-  'Fixed': 'Fastened securely in position',
-  'Movable': 'Capable of being moved',
-  'Rotating': 'Moving in a circle around its center'
-};
 
 let locations = {
   'Fixed': 'First floor',
@@ -23,30 +15,7 @@ let locations = {
   'Rotating': 'Penthouse'
 };
 
-app.route('/blocks')
-  .get(function(req, res) {
-    res.json(Object.keys(blocks));
-  })
-  .post(parseUrlencoded, parseJson, function(req, res) {
-    let newBlock = req.body;
-    blocks[newBlock.name] = newBlock.description;
-    console.log(newBlock.name);
-    res.status(201).json(newBlock.name);
-  });
-
-app.route('/blocks/:name')
-  .get(function(req, res) {
-    let description = blocks[req.blockName];
-    if (!description) {
-      res.status(404).json(`No description found for ${req.params.name}`);
-    } else {
-      res.json(description);
-    }
-  })
-  .delete(function(req, res) {
-     delete blocks[req.blockName];
-     res.sendStatus(200);
-  });
+app.use('/blocks', blocks);
 
 app.param('name', function(req, res, next) {
   let name = req.params.name;
