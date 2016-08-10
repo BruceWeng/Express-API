@@ -23,12 +23,30 @@ let locations = {
   'Rotating': 'Penthouse'
 };
 
-app.post('/blocks', parseUrlencoded, parseJson, function(req, res) {
-  let newBlock = req.body;
-  blocks[newBlock.name] = newBlock.description;
-  console.log(newBlock.name);
-  res.status(201).json(newBlock.name);
-});
+app.route('/blocks')
+  .get(function(req, res) {
+    res.json(Object.keys(blocks));
+  })
+  .post(parseUrlencoded, parseJson, function(req, res) {
+    let newBlock = req.body;
+    blocks[newBlock.name] = newBlock.description;
+    console.log(newBlock.name);
+    res.status(201).json(newBlock.name);
+  });
+
+app.route('/blocks/:name')
+  .get(function(req, res) {
+    let description = blocks[req.blockName];
+    if (!description) {
+      res.status(404).json(`No description found for ${req.params.name}`);
+    } else {
+      res.json(description);
+    }
+  })
+  .delete(function(req, res) {
+     delete blocks[req.blockName];
+     res.sendStatus(200);
+  });
 
 app.param('name', function(req, res, next) {
   let name = req.params.name;
@@ -37,18 +55,6 @@ app.param('name', function(req, res, next) {
   next();
 });
 
-app.get('/blocks', function(req, res) {
-  res.json(Object.keys(blocks));
-});
-
-app.get('/blocks/:name', function(req, res) {
-  let description = blocks[req.blockName];
-  if (!description) {
-    res.status(404).json(`No description found for ${req.params.name}`);
-  } else {
-    res.json(description);
-  }
-});
 
 app.get('/locations/:name', function(req, res) {
   let description = blocks[req.blockName];
@@ -65,10 +71,7 @@ app.get('/parts', function(req, res) {
   console.log('This is /parts');
 });
 
- app.delete('/blocks/:name', function(req, res) {
-   delete blocks[req.blockName];
-   res.sendStatus(200);
- });
+
 
 app.listen(3000, function() {
   console.log('Listening on port 3000');
