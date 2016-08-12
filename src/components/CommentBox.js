@@ -8,8 +8,10 @@ class CommentBox extends React.Component {
         <h3>Comments</h3>
         <h4 className="comment-count">2 comments</h4>
         <div className="comment-list">
-          <Comment />
-          <Comment />
+          <Comment
+            author="Morgan Mccircuit" body="Great picture!"/>
+          <Comment
+            author="Bending Bender" body="Excellent Stuff!"/>
         </div>
       </div>
     );

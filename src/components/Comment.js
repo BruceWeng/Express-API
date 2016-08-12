@@ -4,9 +4,9 @@ class Comment extends React.Component {
   render() {
     return (
       <div className="comment">
-        <p className="comment-header">Anne Droid</p>
+        <p className="comment-header">{this.props.author}</p>
         <p className="comment-body">
-          I wanna know what love is...
+          {this.props.body}
         </p>
         <div className="comment-footer">
           <a href="#" className="comment-footer-delete">
