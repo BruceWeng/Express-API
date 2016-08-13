@@ -5,17 +5,16 @@ class CommentBox extends React.Component {
   constructor() {
     super();
     this.state = {
-      showComments: false
+      showComments: false,
+      comments = [
+        { id: 1, author: 'Morgan McCircuit', body: 'Great picture!' },
+        { id: 2, author: 'Bending Bender', body: 'Excellent stuff'}
+      ];
     };
   }
 
   _getComments() {
-    const commentList = [
-      { id: 1, author: 'Morgan McCircuit', body: 'Great picture!' },
-      { id: 2, author: 'Bending Bender', body: 'Excellent stuff'}
-    ];
-
-    return commentList.map((comment) => {
+    return this.state.comments.map((comment) => {
       return (
         <Comment
           author={comment.author} body={comment.body} key={comment.id} />
@@ -38,6 +37,15 @@ class CommentBox extends React.Component {
     });
   }
 
+  _addComment(author, body) {
+    const comment = {
+      id: this.state.comments.length + 1;
+      author
+      body
+    };
+    this.setState({ comments: this.state.comments.concat([comment]) });
+  }
+
   render() {
     const comments = this._getComments();
     let commentNodes;
@@ -48,6 +56,7 @@ class CommentBox extends React.Component {
     }
     return (
       <div className="comment-box">
+        <CommentForm addComment={this._addComment.bind(this)}
         <h3>Comments</h3>
         <h4 className="comment-count">
           {this._getCommentsTitle(comments.length)}
