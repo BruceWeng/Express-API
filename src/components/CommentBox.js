@@ -19,8 +19,11 @@ class CommentBox extends React.Component {
     return this.state.comments.map((comment) => {
       return (
         <Comment
-          author={comment.author} body={comment.body} key={comment.id} />
-      )
+          key={comment.id}
+          author={comment.author}
+          body={comment.body}
+          onDelete={this._deleteComment.bind(this)} />
+      );
     });
   }
   _getCommentsTitle(commentCount) {
@@ -57,6 +60,18 @@ class CommentBox extends React.Component {
         this.setState({ comments })
       }
     });
+  }
+
+  _deleteComment (comment) {
+    $.ajax({
+      method: 'DELETE',
+      url: `http://localhost:3000/blocks/${comment.id}`
+    });
+
+    const comments = [...this.state.comments];
+    const commentIndex = comments.indexOf(comment);
+    comments.splice(commentIndex, 1);
+    this.setState({ comments });
   }
 
   componentWillMount() {
