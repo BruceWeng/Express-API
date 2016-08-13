@@ -42,12 +42,11 @@ class CommentBox extends React.Component {
   }
 
   _addComment(author, body) {
-    const comment = {
-      id: this.state.comments.length + 1,
-      author,
-      body
-    };
-    this.setState({ comments: this.state.comments.concat([comment]) });
+    const comment = { author,body };
+    $.post('http://localhost:3000/blocks', { comment })
+      .success(newComment => {
+        this.setState({ comments: this.state.comments.concat([newComment]) });
+      });
   }
 
   _fetchComments() {
