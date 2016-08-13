@@ -20,8 +20,7 @@ class CommentBox extends React.Component {
       return (
         <Comment
           key={comment.id}
-          author={comment.author}
-          body={comment.body}
+          comment={comment}
           onDelete={this._deleteComment.bind(this)} />
       );
     });
