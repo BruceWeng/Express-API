@@ -43,10 +43,15 @@ class CommentBox extends React.Component {
 
   _addComment(author, body) {
     const comment = { author,body };
-    $.post('http://localhost:3000/blocks', { comment })
-      .success(newComment => {
+    $.ajax({
+      method: 'POST',
+      url: 'http://localhost:3000/blocks',
+      data: { comment },
+      dataType: 'jsonp',
+      success: (newComment) => {
         this.setState({ comments: this.state.comments.concat([newComment]) });
-      });
+      }
+    });
   }
 
   _fetchComments() {
@@ -55,7 +60,7 @@ class CommentBox extends React.Component {
       url: 'http://localhost:3000/blocks',
       dataType: 'jsonp',
       success: (comments) => {
-        this.setState({ comments })
+        this.setState({ comments });
       }
     });
   }
@@ -63,7 +68,8 @@ class CommentBox extends React.Component {
   _deleteComment (comment) {
     $.ajax({
       method: 'DELETE',
-      url: `http://localhost:3000/blocks/${comment.id}`
+      url: `http://localhost:3000/blocks/${comment.id}`,
+      dataType: 'jsonp'
     });
 
     const comments = [...this.state.comments];
