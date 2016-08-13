@@ -83,6 +83,14 @@ class CommentBox extends React.Component {
       </div>
     );
   }
+
+  componentDidMount() {
+    this._timer = setInterval(() => this._fetchComments(), 5000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this._timer);
+  }
 }
 
 export default CommentBox;
