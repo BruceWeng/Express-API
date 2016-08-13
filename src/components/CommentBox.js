@@ -1,15 +1,17 @@
 import React from 'react';
 import Comment from './Comment';
+import CommentForm from './CommentForm';
+import $ from 'jQuery';
 
 class CommentBox extends React.Component {
   constructor() {
     super();
     this.state = {
       showComments: false,
-      comments = [
+      comments: [
         { id: 1, author: 'Morgan McCircuit', body: 'Great picture!' },
         { id: 2, author: 'Bending Bender', body: 'Excellent stuff'}
-      ];
+      ]
     };
   }
 
@@ -39,11 +41,26 @@ class CommentBox extends React.Component {
 
   _addComment(author, body) {
     const comment = {
-      id: this.state.comments.length + 1;
-      author
+      id: this.state.comments.length + 1,
+      author,
       body
     };
     this.setState({ comments: this.state.comments.concat([comment]) });
+  }
+
+  _fetchComments() {
+    $.ajax({
+      method: 'GET',
+      url: 'http://localhost:3000/blocks',
+      dataType: 'jsonp',
+      success: (comments) => {
+        this.setState({ comments })
+      }
+    });
+  }
+
+  componentWillMount() {
+    this._fetchComments();
   }
 
   render() {
@@ -56,7 +73,7 @@ class CommentBox extends React.Component {
     }
     return (
       <div className="comment-box">
-        <CommentForm addComment={this._addComment.bind(this)}
+        <CommentForm addComment={this._addComment.bind(this)} />
         <h3>Comments</h3>
         <h4 className="comment-count">
           {this._getCommentsTitle(comments.length)}

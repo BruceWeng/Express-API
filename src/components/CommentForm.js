@@ -14,8 +14,11 @@ class CommentForm extends React.Component {
         <label>Join the discussion</label>
         <div className="comment-form-fields">
           <input placeholder="Name:" ref={(input) => this._author = input}/>
+          <br/>
+          <br/>
           <textarea placeholder="Comment:" ref={(textarea) => this._body = textarea}></textarea>
         </div>
+        <br/>
         <div className="comment-form-actions">
           <button type="submit">Post comment</button>
         </div>
@@ -23,3 +26,5 @@ class CommentForm extends React.Component {
     );
   }
 }
+
+export default CommentForm;
