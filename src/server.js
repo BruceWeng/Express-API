@@ -1,14 +1,32 @@
-import express from 'express';
-let app = express();
-import logger from './logger';
-import blocks from './routes/blocks';
+var express = require('express');
+var webpack = require('webpack');
+var webpackDevMiddleware = require('webpack-dev-middleware');
+var webpackHotMiddleware = require('webpack-hot-middleware');
+var webpackDevConfig = require('../webpack.config.js');
+var reload = require('reload');
+var http = require('http');
+
+var compiler = webpack(webpackDevConfig);
+var app = express();
+var server = http.createServer(app);
+reload(server, app);
+var logger = require('./server/logger');
+var blocks = require('./server/routes/blocks');
 // app.get('/', function(request, response) {
 //   response.sendFile(__dirname + '/public/index.html');
 // });
+app.use(webpackDevMiddleware(compiler, {
+  publicPath: webpackDevConfig.output.publicPath,
+  noInfo: true,
+  stats: {
+    colors: true
+  }
+}));
+app.use(webpackHotMiddleware(compiler));
 app.use(logger);
 app.use(express.static('public'));
 
-let locations = {
+var locations = {
   'Fixed': 'First floor',
   'Movable': 'Second floor',
   'Rotating': 'Penthouse'
@@ -17,15 +35,15 @@ let locations = {
 app.use('/blocks', blocks);
 
 app.param('name', function(req, res, next) {
-  let name = req.params.name;
-  let block = name[0].toUpperCase() + name.slice(1).toLowerCase();
+  var name = req.params.name;
+  var block = name[0].toUpperCase() + name.slice(1).toLowerCase();
   req.blockName = block;
   next();
 });
 
 
 app.get('/locations/:name', function(req, res) {
-  let description = blocks[req.blockName];
+  var description = blocks[req.blockName];
   if (!description) {
     res.status(404).json(`No description found for ${req.params.name}`);
   } else {
@@ -41,6 +59,6 @@ app.get('/parts', function(req, res) {
 
 
 
-app.listen(3000, function() {
-  console.log('Listening on port 3000');
+server.listen(3000, function() {
+  console.log('Reload server is listening on port 3000');
 });

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --content-base build"
+    "start": "supervisor -i src/client src/server.js"
   },
   "author": "",
   "license": "ISC",
@@ -21,7 +21,10 @@
     "jquery": "^3.1.0",
     "react": "^15.3.0",
     "react-dom": "^15.3.0",
+    "reload": "^1.0.1",
     "webpack": "^1.13.1",
-    "webpack-dev-server": "^1.14.1"
+    "webpack-dev-middleware": "^1.6.1",
+    "webpack-dev-server": "^1.14.1",
+    "webpack-hot-middleware": "^2.12.2"
   }
 }

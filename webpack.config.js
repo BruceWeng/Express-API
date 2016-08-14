@@ -1,12 +1,16 @@
+var webpack = require('webpack');
+var path = require('path');
+var publicPath = 'http://localhost:3000/';
+var hotMiddleawareScript = 'webpack-hot-middleware/client?reload=true';
+
 module.exports = {
-  entry: './src/app.js',
-  output: {
-    path: './build',
-    filename: 'bundle.js'
+  entry: {
+    path: ['./src/client/app.js', hotMiddleawareScript]
   },
-  devServer: {
-    inline: true,
-    port: 8888
+  output: {
+    path: path.resolve('./public'),
+    publicPath: publicPath,
+    filename: 'bundle.js'
   },
   module: {
     loaders: [
@@ -19,5 +23,10 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+  plugins: [
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin()
+  ]
 }
