@@ -15,6 +15,7 @@ mongoose.connect('mongodb://localhost/ecomm_database');
 
 var logger = require('./server/logger');
 var blocks = require('./server/routes/blocks');
+var products = require('./server/routes/products');
 // app.get('/', function(request, response) {
 //   response.sendFile(__dirname + '/public/index.html');
 // });
@@ -35,12 +36,8 @@ var locations = {
   'Rotating': 'Penthouse'
 };
 
-app.get('/api', function(req, res) {
-  res.json('Ecomm API is running');
-});
-
-app.use('/blocks', blocks);
-
+app.use('/api/blocks', blocks);
+app.use('/api/products', products);
 app.param('name', function(req, res, next) {
   var name = req.params.name;
   var block = name[0].toUpperCase() + name.slice(1).toLowerCase();
