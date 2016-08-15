@@ -12,7 +12,7 @@ var blocks = {
 
 router.route('/')
   .get(function(req, res) {
-    res.json(Object.keys(blocks));
+    res.json(blocks);
   })
   .post(parseUrlencoded, parseJson, function(req, res) {
     var newBlock = req.body;

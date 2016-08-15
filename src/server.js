@@ -5,11 +5,14 @@ var webpackHotMiddleware = require('webpack-hot-middleware');
 var webpackDevConfig = require('../webpack.config.js');
 var reload = require('reload');
 var http = require('http');
+var mongoose = require('mongoose');
 
 var compiler = webpack(webpackDevConfig);
 var app = express();
 var server = http.createServer(app);
 reload(server, app);
+mongoose.connect('mongodb://localhost/ecomm_database');
+
 var logger = require('./server/logger');
 var blocks = require('./server/routes/blocks');
 // app.get('/', function(request, response) {
@@ -31,6 +34,10 @@ var locations = {
   'Movable': 'Second floor',
   'Rotating': 'Penthouse'
 };
+
+app.get('/api', function(req, res) {
+  res.json('Ecomm API is running');
+});
 
 app.use('/blocks', blocks);
 

@@ -8,10 +8,7 @@ class CommentBox extends React.Component {
     super();
     this.state = {
       showComments: false,
-      comments: [
-        { id: 1, author: 'Morgan McCircuit', body: 'Great picture!' },
-        { id: 2, author: 'Bending Bender', body: 'Excellent stuff'}
-      ]
+      comments: []
     };
   }
 
@@ -47,7 +44,7 @@ class CommentBox extends React.Component {
       method: 'POST',
       url: '/blocks',
       data: { comment },
-      dataType: 'jsonp',
+      // dataType: 'jsonp',
       success: (newComment) => {
         this.setState({ comments: this.state.comments.concat([newComment]) });
       }
@@ -58,7 +55,7 @@ class CommentBox extends React.Component {
     $.ajax({
       method: 'GET',
       url: '/blocks',
-      dataType: 'jsonp',
+      // dataType: 'jsonp',
       success: (comments) => {
         this.setState({ comments });
       }
@@ -69,7 +66,7 @@ class CommentBox extends React.Component {
     $.ajax({
       method: 'DELETE',
       url: `/blocks/${comment.id}`,
-      dataType: 'jsonp'
+      // dataType: 'jsonp'
     });
 
     const comments = [...this.state.comments];
