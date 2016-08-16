@@ -42,7 +42,7 @@ class CommentBox extends React.Component {
     const comment = { author,body };
     $.ajax({
       method: 'POST',
-      url: '/blocks',
+      url: 'api/comments',
       data: { comment },
       // dataType: 'jsonp',
       success: (newComment) => {
@@ -54,7 +54,7 @@ class CommentBox extends React.Component {
   _fetchComments() {
     $.ajax({
       method: 'GET',
-      url: '/blocks',
+      url: 'api/comments',
       // dataType: 'jsonp',
       success: (comments) => {
         this.setState({ comments });
@@ -65,7 +65,7 @@ class CommentBox extends React.Component {
   _deleteComment (comment) {
     $.ajax({
       method: 'DELETE',
-      url: `/blocks/${comment.id}`,
+      url: `api/comments/${comment.id}`,
       // dataType: 'jsonp'
     });
 

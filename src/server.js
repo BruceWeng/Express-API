@@ -16,6 +16,7 @@ mongoose.connect('mongodb://localhost/ecomm_database');
 var logger = require('./server/logger');
 var blocks = require('./server/routes/blocks');
 var products = require('./server/routes/products');
+var comments = require('./server/routes/comments');
 // app.get('/', function(request, response) {
 //   response.sendFile(__dirname + '/public/index.html');
 // });
@@ -38,6 +39,7 @@ var locations = {
 
 app.use('/api/blocks', blocks);
 app.use('/api/products', products);
+app.use('/api/comments', comments);
 app.param('name', function(req, res, next) {
   var name = req.params.name;
   var block = name[0].toUpperCase() + name.slice(1).toLowerCase();
