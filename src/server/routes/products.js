@@ -40,5 +40,36 @@ router.route('/:id')
         console.log(err);
       }
     });
+  })
+  .put(parseUrlencoded, parseJson, function(req, res) {
+    Product.findById(req.params.id, function(err, product) {
+      if (err) {
+        console.log(err);
+      }
+
+      product.title = req.body.title;
+      product.description = req.body.description;
+      product.style = req.body.style;
+      product.save(function(err) {
+        if (!err) {
+          console.log('Updated!');
+        } else {
+          console.log(err);
+        }
+      });
+      res.json(product);
+    });
+  })
+  .delete(function(req, res) {
+    Product.findById(req.params.id, function(err, product) {
+      product.remove(function(err) {
+        if (!err) {
+          console.log('Removed!');
+        } else {
+          console.log(err);
+        }
+      });
+    });
   });
-  module.exports = router;
+
+module.exports = router;
