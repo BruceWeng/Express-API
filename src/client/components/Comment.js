@@ -16,13 +16,13 @@ class Comment extends React.Component {
           {this.props.comment.description}
         </p>
         <div className="comment-form-fields">
-          <input placeholder="Edit comment" ref={(input) => this._newComment = input}/>
+          <input placeholder="Edit comment" ref='editInput'}/>
           <br/>
           <br/>
         </div>
         <div className="comment-footer">
 
-          <button className='comment-footer-edit' type='submit'>
+          <button className='comment-footer-edit' type='submit'}>
             Edit comment
           </button>
           <br/>
@@ -33,15 +33,6 @@ class Comment extends React.Component {
       </div>
     );
   }
-
-  // _handleEdit(event) {
-  //   event.preventDefault();
-  //   let newComment = this._newComment;
-  //   this.props.addComment(name.value, description.value);
-  //   this._name.value = '';
-  //   this._description.value = '';
-  // }
-
 
   _handleDelete(event) {
     event.preventDefault();
