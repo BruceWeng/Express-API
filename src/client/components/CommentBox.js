@@ -16,7 +16,7 @@ class CommentBox extends React.Component {
     return this.state.comments.map((comment) => {
       return (
         <Comment
-          key={comment.id}
+          key={comment._id}
           comment={comment}
           onDelete={this._deleteComment.bind(this)} />
       );
@@ -59,11 +59,14 @@ class CommentBox extends React.Component {
       }
     });
   }
-
-  _deleteComment (comment) {
+//Not yet understand but works
+  _deleteComment(key, comment) {
+    console.log(key);
+    console.log(key.name);
+    console.log(key.description);
     $.ajax({
       method: 'DELETE',
-      url: `api/comments/${comment.id}`,
+      url: `api/comments/${key._id}`
     });
 
     const comments = [...this.state.comments];

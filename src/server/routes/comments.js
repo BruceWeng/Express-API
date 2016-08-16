@@ -58,7 +58,7 @@ router.route('/')
         res.json(comment);
       });
     })
-    .delete(function(req, res) {
+    .delete(parseUrlencoded, parseJson, function(req, res) {
       Comment.findById(req.params.id, function(err, comment) {
         comment.remove(function(err) {
           if (!err) {

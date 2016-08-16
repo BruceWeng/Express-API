@@ -19,9 +19,9 @@ class Comment extends React.Component {
 
   _handleDelete(event) {
     event.preventDefault();
-    if (confirm('Are you sure?')) {
+    // if (confirm('Are you sure?')) {
       this.props.onDelete(this.props.comment);
-    }
+    // }
   }
 }
 
