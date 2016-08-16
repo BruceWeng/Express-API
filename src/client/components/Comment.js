@@ -1,6 +1,13 @@
 import React from 'react';
 
 class Comment extends React.Component {
+  // constructor() {
+  //   super();
+  //   this.state = {
+  //     isEditing: false;
+  //   };
+  // }
+
   render() {
     return (
       <div className="comment">
@@ -8,14 +15,33 @@ class Comment extends React.Component {
         <p className="comment-body">
           {this.props.comment.description}
         </p>
+        <div className="comment-form-fields">
+          <input placeholder="Edit comment" ref={(input) => this._newComment = input}/>
+          <br/>
+          <br/>
+        </div>
         <div className="comment-footer">
-          <a href="#" className="comment-footer-delete" onClick={this._handleDelete.bind(this)}>
+
+          <button className='comment-footer-edit' type='submit'>
+            Edit comment
+          </button>
+          <br/>
+          <button className="comment-footer-delete" onClick={this._handleDelete.bind(this)}>
             Delete comment
-          </a>
+          </button>
         </div>
       </div>
     );
   }
+
+  // _handleEdit(event) {
+  //   event.preventDefault();
+  //   let newComment = this._newComment;
+  //   this.props.addComment(name.value, description.value);
+  //   this._name.value = '';
+  //   this._description.value = '';
+  // }
+
 
   _handleDelete(event) {
     event.preventDefault();
