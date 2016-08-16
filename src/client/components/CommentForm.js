@@ -3,9 +3,9 @@ import React from 'react';
 class CommentForm extends React.Component {
   _handleSubmit(event) {
     event.preventDefault();
-    let author = this._author;
-    let body = this._body;
-    this.props.addComment(author.value, body.value);
+    let name = this._name;
+    let description = this._description;
+    this.props.addComment(name.value, description.value);
   }
 
   render() {
@@ -13,10 +13,10 @@ class CommentForm extends React.Component {
       <form className="comment-form" onSubmit={this._handleSubmit.bind(this)}>
         <label>Join the discussion</label>
         <div className="comment-form-fields">
-          <input placeholder="Name:" ref={(input) => this._author = input}/>
+          <input placeholder="Name:" ref={(input) => this._name = input}/>
           <br/>
           <br/>
-          <textarea placeholder="Comment:" ref={(textarea) => this._body = textarea}></textarea>
+          <textarea placeholder="Comment:" ref={(textarea) => this._description = textarea}></textarea>
         </div>
         <br/>
         <div className="comment-form-actions">

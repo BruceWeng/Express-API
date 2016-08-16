@@ -38,13 +38,12 @@ class CommentBox extends React.Component {
     });
   }
 
-  _addComment(author, body) {
-    const comment = { author,body };
+  _addComment(name, description) {
+    const comment = { name, description };
     $.ajax({
       method: 'POST',
       url: 'api/comments',
-      data: { comment },
-      // dataType: 'jsonp',
+      data: comment,
       success: (newComment) => {
         this.setState({ comments: this.state.comments.concat([newComment]) });
       }
@@ -55,7 +54,6 @@ class CommentBox extends React.Component {
     $.ajax({
       method: 'GET',
       url: 'api/comments',
-      // dataType: 'jsonp',
       success: (comments) => {
         this.setState({ comments });
       }
@@ -66,7 +64,6 @@ class CommentBox extends React.Component {
     $.ajax({
       method: 'DELETE',
       url: `api/comments/${comment.id}`,
-      // dataType: 'jsonp'
     });
 
     const comments = [...this.state.comments];
@@ -100,9 +97,9 @@ class CommentBox extends React.Component {
     );
   }
 
-  componentDidMount() {
-    this._timer = setInterval(() => this._fetchComments(), 5000);
-  }
+  // componentDidMount() {
+  //   this._timer = setInterval(() => this._fetchComments(), 5000);
+  // }
 
   componentWillUnmount() {
     clearInterval(this._timer);
