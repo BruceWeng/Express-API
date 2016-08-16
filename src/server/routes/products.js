@@ -41,6 +41,7 @@ router.route('/:id')
       }
     });
   })
+  // Remember to ad parseUrlencoded and parseJson when use body
   .put(parseUrlencoded, parseJson, function(req, res) {
     Product.findById(req.params.id, function(err, product) {
       if (err) {
