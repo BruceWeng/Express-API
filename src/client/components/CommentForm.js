@@ -6,6 +6,8 @@ class CommentForm extends React.Component {
     let name = this._name;
     let description = this._description;
     this.props.addComment(name.value, description.value);
+    this._name.value = '';
+    this._description.value = '';
   }
 
   render() {
